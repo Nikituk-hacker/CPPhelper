@@ -1,0 +1,25 @@
+struct edge {
+	int to, w;
+};
+
+vector<vector<edge>> g;
+int n, m;
+
+vector<int> Dijkstra(int s) {
+	vector<int> dist(n, INT_MAX);
+	dist[s] = 0;
+	set<pair<int, int>> q;
+	q.insert({ dist[s], s });
+	while(!q.empty()) {
+		int nearest = q.begin()->second;
+		q.erase(q.begin());
+		for (auto &v : g[nearest]) {
+			if (dist[v.to] > dist[nearest] + v.w) {
+				q.erase({ dist[v.to], v.to });
+				dist[v.to] = dist[nearest] + v.w;
+				q.insert({ dist[v.to], v.to });
+			}
+		}
+	}
+	return dist;
+}
