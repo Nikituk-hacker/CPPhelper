@@ -159,7 +159,7 @@ BigInt operator+=(BigInt &a, auto b) {
     return a;
 }
 
-BigInt operator++(BigInt &a) {
+BigInt& operator++(BigInt &a) {
     a += 1;
     return a;
 }
