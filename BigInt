@@ -1,0 +1,171 @@
+std::string To_str(auto a) {
+    return std::to_string(a);
+}
+
+std::string To_str(char c) {
+    std::string ans{};
+    ans.push_back(c);
+    return ans;
+}
+
+std::string To_str(const char *a) {
+    return std::string(a, sizeof(a));
+}
+
+std::string To_str(std::basic_string<char> &s) {
+    return s;
+}
+
+struct BigInt {
+    std::string num;
+
+    BigInt() {
+        num = "0";
+    }
+
+    BigInt(auto a) {
+        num = To_str(a);
+    }
+
+    BigInt operator=(auto x) {
+        num = To_str(x);
+        return num;
+    }
+};
+
+std::istream& operator>>(std::istream &is, BigInt &val) {
+    return is >> val.num;
+}
+
+std::ostream& operator<<(std::ostream &os, BigInt val) {
+    return os << val.num << ' ';
+}
+
+bool operator!=(BigInt a, BigInt b) {
+    return a.num != b.num;
+}
+
+bool operator!=(BigInt a, auto b) {
+    return a.num != To_str(b);
+}
+
+bool operator==(BigInt a, BigInt b) {
+    return a.num == b.num;
+}
+
+bool operator==(BigInt a, auto b) {
+    return a.num == To_str(b);
+}
+
+bool operator<(BigInt a, BigInt b) {
+    return a.num < b.num;
+} 
+
+bool operator<(BigInt a, auto b) {
+    return a.num < To_str(b);
+}
+
+bool operator>(BigInt a, BigInt b) {
+    return a.num > b.num;
+} 
+
+bool operator>(BigInt a, auto b) {
+    return a.num > To_str(b);
+}
+
+bool operator>=(BigInt a, BigInt b) {
+    return a.num >= b.num;
+} 
+
+bool operator>=(BigInt a, auto b) {
+    return a.num >= To_str(b);
+}
+
+bool operator <=(BigInt a, BigInt b) {
+    return a.num <= b.num;
+} 
+
+bool operator <=(BigInt a, auto b) {
+    return a.num <= To_str(b);
+}
+
+// BigInt operator-(BigInt a, BigInt b) {
+//     auto x = a.num;
+//     auto y = b.num;
+
+// }
+
+BigInt operator+(BigInt a, BigInt b) {
+    auto x = a.num;
+    auto y = b.num;
+    if (x.size() < y.size()) {
+        swap(x, y);
+    }
+    std::string ans = "";
+    // if ((a < 0 && b >= 0) || (a >= 0 && b < 0)) {
+    //     return a - b;
+    // }
+
+    int sign = (x[0] == '-' ? -1 : 1); //sign of answer
+
+    if (sign == -1) {
+        x.erase(x.begin());
+        y.erase(y.begin());
+    }
+
+    int ptr_on_x = x.size() - 1, ptr_on_y = y.size() - 1;
+    short plus = 0;
+    while (std::min(ptr_on_x, ptr_on_y) >= 0) {
+        short sum = x[ptr_on_x] - '0' + y[ptr_on_y] - '0' + plus;
+        --ptr_on_x;
+        --ptr_on_y;
+        ans.push_back(sum % 10 + '0');
+        plus = 0;
+        if (sum > 9) {
+            plus = 1;
+        }
+    }
+    while (ptr_on_x >= 0) {
+        short sum = x[ptr_on_x] - '0' + plus;
+        --ptr_on_x;
+        ans.push_back(sum % 10 + '0');
+        plus = 0;
+        if (sum > 9) {
+            plus = 1;
+        }
+    }
+    while (ptr_on_y >= 0) {
+        short sum = y[ptr_on_y] - '0' + plus;
+        --ptr_on_y;
+        ans.push_back(sum % 10 + '0');
+        plus = 0;
+        if (sum > 9) {
+            plus = 1;
+        }
+    }
+    if (sign == -1) {
+        ans.push_back('-');
+    }
+    std::reverse(ans.begin(), ans.end());
+    return BigInt(ans);
+}
+
+BigInt operator+(BigInt a, auto b) {
+    return a + BigInt(b);
+}
+
+BigInt operator+=(BigInt &a, auto b) {
+    a = a + BigInt(b);
+    return a;
+}
+
+BigInt& operator++(BigInt &a) {
+    a += 1;
+    return a;
+}
+
+BigInt operator++(BigInt a) {
+    BigInt tmp = a;
+    a += 1;
+    return tmp;
+}
