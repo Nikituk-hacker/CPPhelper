@@ -49,6 +49,35 @@ struct BigInt {
     int size() {
         return num.size();
     }
+
+    auto begin() {
+        return num.begin();
+    }
+
+    auto end() {
+        return num.end();
+    }
+
+    auto rbegin() {
+        return num.rbegin();
+    }
+
+    auto rend() {
+        return num.rend();
+    }
+
+    void push_back(char c) {
+        num.push_back(c);
+    }
+
+    void pop_back() {
+        num.pop_back();
+    }
+
+    void erase(auto x) {
+        num.erase(x);
+    }
+
 };
 
 using bi = BigInt;
@@ -213,20 +242,20 @@ bi operator-(bi a, bi b) {
     }
     bi ans;
     ans.num = "";
-    if (a.num.size() > b.num.size()) {
-        b.num = std::string(a.num.size() - b.num.size(), '0') + b.num;
+    if (a.size() > b.size()) {
+        b.num = std::string(a.size() - b.size(), '0') + b.num;
     }
-    for (int i = a.num.size() - 1; i >= 0; --i) {
+    for (int i = a.size() - 1; i >= 0; --i) {
         if (a.num[i] >= b.num[i]) {
-            ans.num.push_back((char)a.num[i] - b.num[i] + '0');
+            ans.push_back((char)a.num[i] - b.num[i] + '0');
         } else {
             a.num[i - 1] -= 1;
-            ans.num.push_back((char)a.num[i] + 10 - b.num[i] + '0');
+            ans.push_back((char)a.num[i] + 10 - b.num[i] + '0');
         }
     }
-    std::reverse(ans.num.begin(), ans.num.end());
-    while (ans.num.size() > 1 && *ans.num.begin() == '0') {
-        ans.num.erase(ans.num.begin());
+    std::reverse(ans.begin(), ans.end());
+    while (ans.size() > 1 && *ans.begin() == '0') {
+        ans.erase(ans.begin());
     }
     return ans;
 }
