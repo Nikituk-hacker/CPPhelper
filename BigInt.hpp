@@ -271,6 +271,12 @@ long long binpow(long long a, long long b) {
     return tmp * tmp;
 }
 
+short signum(bi x) {
+    if (x == 0) 
+        return 0;
+    return x < 0 ? -1 : 1;
+}
+
 bi operator*(bi a, bi b) {
     short sign = -1;
     if (signum(a) == signum(b) && signum(a) == -1) {
@@ -363,4 +369,16 @@ namespace std {
     bi abs(bi a) {
         return a < 0 ? -a : a;
     }
+
+    // Binary power template. uncomment when smb codes division
+    // bi binpow(bi a, bi b) {
+    //     if (b == 0) {
+    //         return 1;
+    //     } 
+    //     if ((*(b.end() - 1) - '0') % 2) {
+    //         return binpow(a, b - 1) * a;
+    //     }
+    //     bi tmp = binpow(a, b / 2);
+    //     return tmp * tmp;
+    // }
 }
