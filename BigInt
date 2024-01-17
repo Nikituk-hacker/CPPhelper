@@ -158,3 +158,14 @@ BigInt operator+=(BigInt &a, auto b) {
     a = a + BigInt(b);
     return a;
 }
+
+BigInt& operator++(BigInt &a) {
+    a += 1;
+    return a;
+}
+
+BigInt operator++(BigInt &a, int value) {
+    BigInt tmp = a;
+    a += 1;
+    return tmp;
+}
