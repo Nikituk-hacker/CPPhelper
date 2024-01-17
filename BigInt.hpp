@@ -45,6 +45,10 @@ struct BigInt {
         }
         return num;
     }
+
+    int size() {
+        return num.size();
+    }
 };
 
 std::istream& operator>>(std::istream &is, BigInt &val) {
