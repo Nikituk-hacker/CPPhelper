@@ -142,15 +142,20 @@ bool operator <=(bi a, auto b) {
 // }
 
 bi operator+(bi a, bi b) {
+    bi operator-(bi, bi);
     auto x = a.num;
     auto y = b.num;
     if (x.size() < y.size()) {
         swap(x, y);
     }
     std::string ans = "";
-    // if ((a < 0 && b >= 0) || (a >= 0 && b < 0)) {
-    //     return a - b;
-    // }
+    if (a >= 0 && b < 0) {
+        return a - (-b);
+    }
+
+    if (a < 0 && b >= 0) {
+        return b - a;
+    }
 
     int sign = (x[0] == '-' ? -1 : 1); //sign of answer
 
@@ -203,7 +208,7 @@ bi operator-(bi a, bi b) {
     if (a < b) {
         return -(b - a);
     }
-    if (b < 0) {
+    if (b < 0 && a >= 0) {
         return a + (-b);
     }
     bi ans;
