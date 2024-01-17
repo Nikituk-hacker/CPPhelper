@@ -51,31 +51,33 @@ struct BigInt {
     }
 };
 
-std::istream& operator>>(std::istream &is, BigInt &val) {
+using bi = BigInt;
+
+std::istream& operator>>(std::istream &is, bi &val) {
     return is >> val.num;
 }
 
-std::ostream& operator<<(std::ostream &os, BigInt val) {
+std::ostream& operator<<(std::ostream &os, bi val) {
     return os << val.num << ' ';
 }
 
-bool operator!=(BigInt a, BigInt b) {
+bool operator!=(bi a, bi b) {
     return a.num != b.num;
 }
 
-bool operator!=(BigInt a, auto b) {
+bool operator!=(bi a, auto b) {
     return a.num != To_str(b);
 }
 
-bool operator==(BigInt a, BigInt b) {
+bool operator==(bi a, bi b) {
     return a.num == b.num;
 }
 
-bool operator==(BigInt a, auto b) {
+bool operator==(bi a, auto b) {
     return a.num == To_str(b);
 }
 
-bool operator<(BigInt a, BigInt b) {
+bool operator<(bi a, bi b) {
     if (a.num[0] == '-' && b.num[0] == '-') {
         if (a == b) return false;
         return !(a.num < b.num);
@@ -86,14 +88,17 @@ bool operator<(BigInt a, BigInt b) {
     if (b.num[0] == '-') {
         return false;
     }
+    if (a.size() != b.size()) {
+        return a.size() < b.size() ? 1 : 0;
+    }
     return a.num < b.num;
 } 
 
-bool operator<(BigInt a, auto b) {
+bool operator<(bi a, auto b) {
     return a.num < To_str(b);
 }
 
-bool operator>(BigInt a, BigInt b) {
+bool operator>(bi a, bi b) {
     if (a.num[0] == '-' && b.num[0] == '-') {
         if (a == b) return false;
         return !(a.num > b.num);
@@ -104,36 +109,39 @@ bool operator>(BigInt a, BigInt b) {
     if (b.num[0] == '-') {
         return true;
     }
+    if (a.size() != b.size()) {
+        return a.size() > b.size() ? 1 : 0;
+    }
     return a.num > b.num;
 } 
 
-bool operator>(BigInt a, auto b) {
+bool operator>(bi a, auto b) {
     return a.num > To_str(b);
 }
 
-bool operator>=(BigInt a, BigInt b) {
+bool operator>=(bi a, bi b) {
     return a.num > b.num || a.num == b.num;
 } 
 
-bool operator>=(BigInt a, auto b) {
+bool operator>=(bi a, auto b) {
     return a.num >= To_str(b);
 }
 
-bool operator <=(BigInt a, BigInt b) {
+bool operator <=(bi a, bi b) {
     return a.num < b.num || a.num == b.num;
 } 
 
-bool operator <=(BigInt a, auto b) {
+bool operator <=(bi a, auto b) {
     return a.num <= To_str(b);
 }
 
-// BigInt operator-(BigInt a, BigInt b) {
+// bi operator-(bi a, bi b) {
 //     auto x = a.num;
 //     auto y = b.num;
 
 // }
 
-BigInt operator+(BigInt a, BigInt b) {
+bi operator+(bi a, bi b) {
     auto x = a.num;
     auto y = b.num;
     if (x.size() < y.size()) {
@@ -188,17 +196,17 @@ BigInt operator+(BigInt a, BigInt b) {
         ans.push_back('-');
     }
     std::reverse(ans.begin(), ans.end());
-    return BigInt(ans);
+    return bi(ans);
 }
 
-BigInt operator-(BigInt a, BigInt b) {
+bi operator-(bi a, bi b) {
     if (a < b) {
         return -(b - a);
     }
     if (b < 0) {
         return a + (-b);
     }
-    BigInt ans;
+    bi ans;
     ans.num = "";
     if (a.num.size() > b.num.size()) {
         b.num = std::string(a.num.size() - b.num.size(), '0') + b.num;
@@ -218,27 +226,32 @@ BigInt operator-(BigInt a, BigInt b) {
     return ans;
 }
 
-
-BigInt operator-(BigInt a, auto b) {
-    return a - BigInt(b);
+bi operator-(bi a, auto b) {
+    return a - bi(b);
 }
 
-BigInt operator+(BigInt a, auto b) {
-    return a + BigInt(b);
+bi operator+(bi a, auto b) {
+    return a + bi(b);
 }
 
-BigInt operator+=(BigInt &a, auto b) {
-    a = a + BigInt(b);
+bi operator+=(bi &a, auto b) {
+    a = a + bi(b);
     return a;
 }
 
-BigInt& operator++(BigInt &a) {
+bi& operator++(bi &a) {
     a += 1;
     return a;
 }
 
-BigInt operator++(BigInt &a, int value) {
-    BigInt tmp = a;
+bi operator++(bi &a, int value) {
+    bi tmp = a;
     a += 1;
     return tmp;
+}
+
+namespace std {
+    bi min(bi a, bi b) {
+        return a < b ? a : b;
+    }
 }
