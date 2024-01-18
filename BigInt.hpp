@@ -1,7 +1,16 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
+#include <bits/stdc++.h>
+
+using ll = long long;
+using ld = long double;
+using pii = std::pair<int, int>;
+using vi = std::vector<int>;
+using vpii = std::vector<pii>;
+using vb = std::vector<bool>;
+using vs = std::vector<std::string>;
+using vll = std::vector<ll>;
+using vvi = std::vector<vi>;
+using vvb = std::vector<vb>;
+#define all(a) a.begin(), a.end()
 
 std::string To_str(auto a) {
 	return std::to_string(a);
@@ -77,6 +86,10 @@ struct BigInt {
 	void erase(auto x) {
 		num.erase(x);
 	}
+
+    auto back() {
+        return num.back();
+    }
 
 };
 
