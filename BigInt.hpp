@@ -385,3 +385,50 @@ namespace std {
 	//     return tmp * tmp;
 	// }
 }
+
+bi Div(bi a) {
+    std::string ans{};
+    std::reverse(a.begin(), a.end());
+    int now{};
+    while (a.size()) {
+        now *= 10;
+        now += a.back() - '0';
+        a.pop_back();
+        if (now == 1 && a.size()) {
+            now *= 10;
+            now += a.back() - '0';
+            a.pop_back();
+        }
+        ans += To_str(now / 2);
+        now %= 2;
+    }
+    return ans;
+}
+
+bi operator/(bi a, bi b) {
+    if (a < b || a == 0) {
+        return 0;
+    }
+    int sign = 1;
+    if ((a < 0 && b >= 0) || (a >= 0 && b < 0)) {
+        sign = -1;
+    }
+    a = std::abs(a);
+    b = std::abs(b);
+    bi lhs = bi("1" + std::string(std::max(0, a.size() - b.size() - 1), '0'));
+    bi rhs = lhs;
+    rhs.push_back('0');
+    rhs.push_back('0');
+    while (rhs - lhs > 1) {
+        bi mid = Div((lhs + rhs));
+        if (mid * b > a) {
+            rhs = mid;
+        } else {
+            lhs = mid;
+        }
+    }
+    if (sign == -1) {
+        return -lhs;
+    }
+    return lhs;
+}
