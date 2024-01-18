@@ -445,3 +445,26 @@ bi operator/(bi a, bi b) {
     }
     return lhs;
 }
+
+bi operator/=(bi &a, auto b) {
+    a /= bi(b);
+    return a;
+}
+
+bi operator%(bi a, bi b) {
+    bi ans = a - a / b * b;
+    return ans;
+}
+
+bi operator%(bi a, auto b) {
+    return a % bi(b);
+}
+
+bi operator%=(bi &a, bi b) {
+    a %= b;
+    return a;
+}
+
+bi operator%=(bi &a, auto b) {
+    return a %= bi(b);
+}
