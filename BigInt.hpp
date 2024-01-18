@@ -276,17 +276,6 @@ bi operator-(bi a, bi b) {
 	return ans;
 }
 
-long long binpow(long long a, long long b) {
-	if (b == 0) {
-		return 1;
-	} 
-	if (b % 2) {
-		return binpow(a, b - 1) * a;
-	}
-	long long tmp = binpow(a, b / 2);
-	return tmp * tmp;
-}
-
 short signum(bi x) {
 	if (x == 0) 
 		return 0;
@@ -323,15 +312,15 @@ bi operator*(bi a, bi b) {
 
 		for (long long j = a.size() - 1; j >= 0; --j) {
 			short curr = (a.num[j] - '0') * (b.num[i] - '0');
-			temp = temp + curr * binpow(10, a.size() - j - 1);
+			temp = temp + (To_str(curr) + std::string(a.size() - j - 1, '0'));
 		}
 		temp.num += std::string(curr_power, '0');
 		ans = ans + temp;
 		curr_power = curr_power + 1;
 	}
-	if (last) {
+	/* (last) {
 		ans = ans + (last * binpow(10, curr_power));
-	}
+	}*/
 	return ans;
 }
 
@@ -467,4 +456,19 @@ bi operator%=(bi &a, bi b) {
 
 bi operator%=(bi &a, auto b) {
     return a %= bi(b);
+}
+
+bi binpow(bi a, bi b) {
+	if (b == 0) {
+		return 1;
+	} 
+	if (b % 2 == 1) {
+		return binpow(a, b - 1) * a;
+	}
+	bi tmp = binpow(a, b / 2);
+	return tmp * tmp;
+}
+
+bi binpow(bi a, auto b) {
+	return binpow(a, bi(b));
 }
