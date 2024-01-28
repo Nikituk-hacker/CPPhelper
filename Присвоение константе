@@ -1,0 +1,147 @@
+#include <climits>
+#include <unordered_map>
+#include <random>
+#include <chrono>
+#include <numeric>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <queue>
+#include <deque>
+#include <stack>
+#include <functional>
+#include <bitset>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
+#include <cmath>
+#include <cassert>
+#include <list>
+#include <forward_list>
+#include <set>
+#include <unordered_set>
+#include <cstdint>
+
+using namespace std;
+
+#define all(x) begin(x), end(x)
+#define isz(x) (int)size(x)
+#define fastType ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+// Defines:
+using ll = long long;
+using ull = unsigned long long;
+using ld = long double;
+using vi = vector<int>;
+using vb = vector<bool>;
+using vll = vector<ll>;
+using vvi = vector<vi>;
+using vvll = vector<vll>;
+using pii = pair<int, int>;
+using pil = pair<int, ll>;
+using pli = pair<ll, int>;
+using pll = pair<ll, ll>;
+using vpii = vector<pii>;
+using vvpii = vector<vpii>;
+using vpll = vector<pll>;
+using vvpll = vector<vpll>;
+using vs = vector<string>;
+using tiii = tuple<int, int, int>;
+using tiil = tuple<int, int, ll>;
+using vtiii = vector<tiii>;
+using vtiil = vector<tiil>;
+// Algorithms:
+template<typename C> 
+void reuniq(C& c) { c.erase(unique(all(c)), end(c)); }
+template<typename C, typename X> 
+int lowpos(const C& c, X x) {
+    return int(lower_bound(all(c), x) - begin(c));
+}
+template<typename C, typename X> 
+int uppos(const C& c, X x) {
+    return int(upper_bound(all(c), x) - begin(c));
+}
+template<typename X, typename Y> 
+X& remin(X& x, const Y& y) { return x = (y < x) ? y : x; }
+template<typename X, typename Y> 
+X& remax(X& x, const Y& y) { return x = (x < y) ? y : x; }
+// Input:
+template<typename T> 
+istream& operator>>(istream& is, vector<T>& vec) {
+    for (auto &it : vec) is >> it;
+    return is;
+}
+
+template<typename T>
+void SolveWhile(T a) { int t; cin >> t; while (t--) { a(); } }
+
+const string YES = "YES";
+const string NO = "NO";
+
+int n, m;
+vector<set<int>> g;
+bitset<(int)1e5 + 100> use;
+
+void Dfs(int v, const int &start, const int &end) {
+    use[v] = 1;
+    for (auto &x : g[v]) {
+        if (v == start && x == end) continue;
+        if (v == end && x == start) continue;
+        if (!use[x]) {
+            Dfs(x, start, end);
+        }
+    }
+}
+
+void CotrolPanel() {
+    cin >> n >> m;
+    g.resize(n + 1);
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        cin >> x >> y;
+        g[x].insert(y);
+        g[y].insert(x);
+    }
+    while (m > n - 1) {
+        for (int i = 1; i <= n; ++i) {
+            for (const auto &x : g[i]) {
+                use.reset();
+                Dfs(i, i, x);
+                bool yes = 1;
+                for (int j = 1; j <= n; ++j) {
+                    if (!use[j]) {
+                        yes = 0;
+                        break;
+                    }
+                }
+                if (yes) {
+                    g[i].erase(x);
+                    g[x].erase(i);
+                    --m;
+                    if (m == n - 1) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 1; i <= n; ++i) {
+        for (auto &x : g[i]) {
+            if (x < i) {
+                cout << i << " " << x << '\n';
+            }
+        }
+    }
+}
+
+signed main() {
+    #define DEBUG
+    #ifdef DEBUG
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    fastType
+    SolveWhile(CotrolPanel);
+    return 0;
+}
