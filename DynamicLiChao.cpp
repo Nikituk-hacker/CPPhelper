@@ -1,4 +1,4 @@
-namespace Handmade {
+namespace DynamicLiChaoTree {
   const long double eps = 1e0;
   const long long maxn = 1e10;
   const long long inf = 1e18;

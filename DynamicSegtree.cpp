@@ -1,4 +1,4 @@
-namespace Handmade {
+namespace DynamicSegtree {
   // Описание Node сначала изменения потом значение \
      например Присвоение__Сумма
   const long long inf = (long long)1e17;
