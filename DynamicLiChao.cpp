@@ -1,8 +1,8 @@
-const long double eps = 1e0;
-const long long maxn = 1e10;
-const long long inf = 1e18;
-
 namespace Handmade {
+  const long double eps = 1e0;
+  const long long maxn = 1e10;
+  const long long inf = 1e18;
+  
   struct DynamicLiChaoTreeMin {
     struct Line {
       long double k, b;
