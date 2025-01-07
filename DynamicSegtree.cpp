@@ -1,8 +1,8 @@
-const long long __very_big_number = (long long)1e17;
 namespace Handmade {
   // Описание Node сначала изменения потом значение \
      например Присвоение__Сумма
-
+  const long long __very_big_number = (long long)1e17;
+  
   template<typename Info, typename Value>
   struct DynamicSegtree {
     struct Node {
