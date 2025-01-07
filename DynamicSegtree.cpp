@@ -1,5 +1,5 @@
 const long long __very_big_number = (long long)1e17;
-struct Handmade {
+namespace Handmade {
   // Описание Node сначала изменения потом значение \
      например Присвоение__Сумма
 
@@ -275,4 +275,4 @@ struct Handmade {
       return ans;
     }
   };
-};
+}
