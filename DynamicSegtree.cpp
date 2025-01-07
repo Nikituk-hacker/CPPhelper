@@ -1,7 +1,7 @@
 namespace Handmade {
   // Описание Node сначала изменения потом значение \
      например Присвоение__Сумма
-  const long long __very_big_number = (long long)1e17;
+  const long long inf = (long long)1e17;
   
   template<typename Info, typename Value>
   struct DynamicSegtree {
@@ -99,9 +99,9 @@ namespace Handmade {
   struct Set__Max {
     long long mx, av;
     
-    Set__Max() : mx(-__very_big_number), av(__very_big_number) {}
+    Set__Max() : mx(-inf), av(inf) {}
     
-    Set__Max(ll x) : mx(x), av(__very_big_number) {}
+    Set__Max(ll x) : mx(x), av(inf) {}
     
     template<typename Node>
     static void apply(Node *n, long long val, long long lx, long long rx) {
@@ -111,11 +111,11 @@ namespace Handmade {
     
     template<typename Node>
     static void push(Node *n, long long lx, long long rx) {
-      if (n->value.av != __very_big_number) {
+      if (n->value.av != inf) {
         long long m = (lx + rx) / 2;
         apply(n->left, n->value.av, lx, m);
         apply(n->right, n->value.av, m, rx);
-        n->value.av = __very_big_number;
+        n->value.av = inf;
       }
     }
     
@@ -129,9 +129,9 @@ namespace Handmade {
   struct Set__Min {
     long long mn, av;
     
-    Set__Min() : mn(__very_big_number), av(__very_big_number) {}
+    Set__Min() : mn(inf), av(inf) {}
     
-    Set__Min(ll x) : mn(x), av(__very_big_number) {}
+    Set__Min(ll x) : mn(x), av(inf) {}
     
     template<typename Node>
     static void apply(Node *n, long long val, long long lx, long long rx) {
@@ -141,11 +141,11 @@ namespace Handmade {
     
     template<typename Node>
     static void push(Node *n, long long lx, long long rx) {
-      if (n->value.av != __very_big_number) {
+      if (n->value.av != inf) {
         long long m = (lx + rx) / 2;
         apply(n->left, n->value.av, lx, m);
         apply(n->right, n->value.av, m, rx);
-        n->value.av = __very_big_number;
+        n->value.av = inf;
       }
     }
     
@@ -159,9 +159,9 @@ namespace Handmade {
   struct Set__Sum {
     long long sum, av;
     
-    Set__Sum() : sum(0), av(__very_big_number) {}
+    Set__Sum() : sum(0), av(inf) {}
     
-    Set__Sum(ll s) : sum(s), av(__very_big_number) {}
+    Set__Sum(ll s) : sum(s), av(inf) {}
     
     template<typename Node>
     static void apply(Node *n, long long val, long long lx, long long rx) {
@@ -171,11 +171,11 @@ namespace Handmade {
     
     template<typename Node>
     static void push(Node *n, long long lx, long long rx) {
-      if (n->value.av != __very_big_number) {
+      if (n->value.av != inf) {
         long long m = (lx + rx) / 2;
         apply(n->left, n->value.av, lx, m);
         apply(n->right, n->value.av, m, rx);
-        n->value.av = __very_big_number;
+        n->value.av = inf;
       }
     }
     
@@ -219,7 +219,7 @@ namespace Handmade {
   struct Add__Min {
     long long mn, add;
     
-    Add__Min() : mn(__very_big_number), add(0) {}
+    Add__Min() : mn(inf), add(0) {}
     
     Add__Min(ll x) : mn(x), add(0) {}
     
@@ -249,7 +249,7 @@ namespace Handmade {
   struct Add__Max {
     long long mx, add;
     
-    Add__Max() : mx(-__very_big_number), add(0) {}
+    Add__Max() : mx(-inf), add(0) {}
     
     Add__Max(ll x) : mx(x), add(0) {}
     
