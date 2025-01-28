@@ -56,6 +56,6 @@ std::istream& operator>>(std::istream& is, int_mod &imod) {
     return is;
 }
 
-std::ostream& operator<<(std::ostream& os, int_mod &imod) {
+std::ostream& operator<<(std::ostream& os, int_mod imod) {
 	return os << (ll)imod;
 }
