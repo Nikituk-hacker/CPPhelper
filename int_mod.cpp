@@ -38,7 +38,7 @@ class int_mod {
 
 	int_mod operator=(int_mod other) { return value = other.value; }
 
-	int_mod operator=(ll other) { return value = other; }
+	int_mod operator=(ll other) { return *this = int_mod(other); }
 
 	int_mod operator+=(int_mod other) { return *this = *this + other; }
 
